@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Empresa - DevClub</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/empresa.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/profile-modal.css">
+</head>
+<body>
+
+    <script>
+        console.log('Página da empresa carregada');
+        console.log('Último tipo cadastro:', sessionStorage.getItem('ultimoTipoCadastro'));
+    </script>
+    
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">DevClub Empresas</div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class='bx bx-moon'></i>
+                </button>
+                <div class="user-menu">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=40&h=40&fit=crop&crop=face" alt="Empresa" class="user-avatar">
+                    <span>Minha Empresa</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Layout Principal -->
+    <main class="main-container">
+        <!-- Sidebar de Filtros -->
+        <aside class="filters-sidebar">
+            <div class="filter-section">
+                <h3 class="filter-title">
+                    <i class='bx bx-filter-alt'></i>
+                    Filtros
+                </h3>
+                
+                <!-- Linguagens de Programação -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Linguagens</h4>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="JavaScript">
+                        <span>JavaScript</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Python">
+                        <span>Python</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Java">
+                        <span>Java</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="React">
+                        <span>React</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Node.js">
+                        <span>Node.js</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="SQL">
+                        <span>SQL</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="PHP">
+                        <span>PHP</span>
+                    </label>
+                     <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Mongol">
+                        <span>Mongol</span>
+                    </label>
+                     <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="C#">
+                        <span>C#</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Kotlin">
+                        <span>Kotlin</span>
+                    </label>
+                     <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="C++">
+                        <span>C++</span>
+                    </label>
+                     <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Swift">
+                        <span>Swift</span>
+                    </label>
+                     <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Objective-C">
+                        <span>Objective-C</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Flutter">
+                        <span>Flutter</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Go">
+                        <span>Go</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="TypeScript">
+                        <span>TypeScript</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Ruby">
+                        <span>Ruby</span>
+                    </label>
+                      <label class="filter-checkbox">
+                        <input type="checkbox" name="languages" value="Fortran">
+                        <span>Fortran</span>
+                    </label>
+                </div>
+
+                <!-- Frameworks - NOVA SEÇÃO ADICIONADA -->
+                <div class="filter-section collapsible">
+                    <div class="filter-header" onclick="toggleFilterSection(this)">
+                        <span>Frameworks & Bibliotecas</span>
+                        <i class='bx bx-chevron-down'></i>
+                    </div>
+                    <div class="filter-content">
+                        <div class="filter-subgroup scrollable-filters">
+                            <!-- Frontend -->
+                            <h5 class="filter-subtitle">Frontend</h5>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="React">
+                                <span>React</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Vue.js">
+                                <span>Vue.js</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Angular">
+                                <span>Angular</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Svelte">
+                                <span>Svelte</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Next.js">
+                                <span>Next.js</span>
+                            </label>
+                            
+                            <!-- Backend -->
+                            <h5 class="filter-subtitle" style="margin-top: 1rem;">Backend</h5>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Node.js">
+                                <span>Node.js</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Express.js">
+                                <span>Express.js</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Django">
+                                <span>Django</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Spring Boot">
+                                <span>Spring Boot</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Laravel">
+                                <span>Laravel</span>
+                            </label>
+                            
+                            <!-- Mobile -->
+                            <h5 class="filter-subtitle" style="margin-top: 1rem;">Mobile</h5>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="React Native">
+                                <span>React Native</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Flutter">
+                                <span>Flutter</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="frameworks" value="Ionic">
+                                <span>Ionic</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ferramentas - NOVA SEÇÃO ADICIONADA -->
+                <div class="filter-section collapsible">
+                    <div class="filter-header" onclick="toggleFilterSection(this)">
+                        <span>Ferramentas & Tecnologias</span>
+                        <i class='bx bx-chevron-down'></i>
+                    </div>
+                    <div class="filter-content">
+                        <div class="filter-subgroup scrollable-filters">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="tools" value="Git">
+                                <span>Git</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="tools" value="Docker">
+                                <span>Docker</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="tools" value="AWS">
+                                <span>AWS</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="tools" value="Figma">
+                                <span>Figma</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="tools" value="Jira">
+                                <span>Jira</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="tools" value="Photoshop">
+                                <span>Photoshop</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="tools" value="Illustrator">
+                                <span>Illustrator</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="tools" value="Slack">
+                                <span>Slack</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="tools" value="Trello">
+                                <span>Trello</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tamanho do Contrato -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Tipo de Contrato</h4>
+                    <div class="contract-size">
+                        <button class="size-btn" data-size="small">Pequeno</button>
+                        <button class="size-btn" data-size="medium">Médio</button>
+                        <button class="size-btn" data-size="large">Grande</button>
+                    </div>
+                </div>
+
+                <!-- Disponibilidade -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Disponibilidade</h4>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="availability" value="Disponível">
+                        <span>Disponível</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="availability" value="Em breve">
+                        <span>Em breve</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="availability" value="Limitado">
+                        <span>Limitado</span>
+                    </label>
+                </div>
+
+                <!-- Experiência -->
+                <div class="filter-group">
+                    <h4 class="filter-title">Experiência</h4>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="experience" value="Junior">
+                        <span>Júnior</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="experience" value="Pleno">
+                        <span>Pleno</span>
+                    </label>
+                    <label class="filter-checkbox">
+                        <input type="checkbox" name="experience" value="Senior">
+                        <span>Sênior</span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <section class="main-content">
+            <!-- Barra de Busca -->
+            <div class="search-bar">
+                <div class="search-container">
+                    <input type="text" 
+                           class="search-input" 
+                           id="searchInput"
+                           placeholder="Buscar por habilidades, nome ou especialidade...">
+                    <button class="search-btn" id="searchBtn">
+                        <i class='bx bx-search'></i>
+                        Buscar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grid de Freelancers -->
+            <div class="freelancers-grid" id="freelancersGrid">
+                <!-- Os freelancers serão renderizados aqui via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Sidebar Direita -->
+        <aside class="right-sidebar">
+            <!-- Perfil da Empresa -->
+            <div class="company-profile">
+                <div class="profile-header">
+                    <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=80&h=80&fit=crop&crop=center" 
+                         alt="Logo da Empresa" 
+                         class="company-logo"
+                         id="companyLogo">
+                    <h2 class="company-name" id="companyNameDisplay">Sua Empresa</h2>
+                    <div class="company-industry" id="companyIndustryDisplay">Indústria</div>
+                </div>
+
+                <form class="profile-form" id="companyForm">
+                    <div class="form-group">
+                        <label class="form-label">Nome da Empresa</label>
+                        <input type="text" 
+                               class="form-input" 
+                               id="companyName"
+                               name="companyName"
+                               placeholder="Digite o nome da empresa">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Indústria</label>
+                        <select class="form-select" id="companyIndustry" name="companyIndustry">
+                            <option value="">Selecione a indústria</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Finanças">Finanças</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Descrição</label>
+                        <textarea class="form-textarea" 
+                                  id="companyDescription"
+                                  name="companyDescription"
+                                  placeholder="Descreva sua empresa..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Website</label>
+                        <input type="url" 
+                               class="form-input" 
+                               id="companyWebsite"
+                               name="companyWebsite"
+                               placeholder="https://suaempresa.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Logo da Empresa</label>
+                        <div class="image-upload">
+                            <label class="upload-btn">
+                                <i class='bx bx-cloud-upload'></i>
+                                Escolher Imagem
+                                <input type="file" 
+                                       id="logoUpload" 
+                                       accept="image/*" 
+                                       style="display: none;">
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="save-btn">
+                        <i class='bx bx-save'></i>
+                        Salvar Perfil
+                    </button>
+                </form>
+            </div>
+
+            <!-- Espaço para Publicidade -->
+            <div class="ad-space">
+                <div class="ad-content">
+                    <h3 class="ad-title">Destaque sua Vaga!</h3>
+                    <p class="ad-description">
+                        Sua vaga em destaque para +10.000 desenvolvedores qualificados
+                    </p>
+                    <a href="#" class="ad-cta">
+                        Anunciar Agora
+                    </a>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Botão de Chat Flutuante - NOVO ELEMENTO ADICIONADO -->
+    <button class="chat-toggle" id="chatToggle">
+        <i class='bx bx-message-rounded'></i>
+        <div class="chat-badge" id="chatBadge" style="display: none;">0</div>
+    </button>
+
+    <!-- Container do Chat - NOVO ELEMENTO ADICIONADO -->
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div class="chat-freelancer-info">
+                <img src="" alt="" class="chat-avatar" id="chatFreelancerAvatar">
+                <span id="chatFreelancerName">Selecione um freelancer</span>
+            </div>
+            <button class="close-chat" id="closeChat">
+                <i class='bx bx-x'></i>
+            </button>
+        </div>
+        <div class="chat-status" id="chatStatus">
+            Conectado
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Mensagens serão carregadas aqui -->
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem...">
+            <button class="send-message" onclick="sendChatMessage()">
+                <i class='bx bx-send'></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Contrato (ORIGINAL) -->
+    <div class="modal" id="contractModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Enviar Proposta</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Você está prestes a enviar uma proposta para <strong id="modalFreelancerName">[Nome]</strong></p>
+                <p>Taxa horária: <strong id="modalFreelancerRate">[Valor]</strong></p>
+                
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label">Tipo de Contrato</label>
+                    <select class="form-select" id="contractType">
+                        <option value="horas">Por Horas</option>
+                        <option value="projeto">Projeto Fixo</option>
+                        <option value="mes">Mensal</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Descrição do Projeto</label>
+                    <textarea class="form-textarea" id="projectDescription" placeholder="Descreva o projeto..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Orçamento Estimado (R$)</label>
+                    <input type="number" class="form-input" id="projectBudget" placeholder="0,00">
+                </div>
+
+                <button class="save-btn" style="width: 100%; margin-top: 1rem;" onclick="submitProposal()">
+                    <i class='bx bx-send'></i>
+                    Enviar Proposta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOVO: Modal de Perfil Expandido -->
+    <div class="modal profile-modal" id="profileModal">
+        <div class="modal-content">
+            <!-- Conteúdo será carregado dinamicamente via JavaScript -->
+        </div>
+    </div>
+
+    <!-- NOVO: Modal de Avaliação -->
+    <div class="modal" id="ratingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Avaliar Freelancer</h3>
+                <button class="close-modal" onclick="closeRatingModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="rating-system">
+                    <h4>Avalie <span id="ratingFreelancerName">[Nome]</span></h4>
+                    <div class="stars-input">
+                        <button class="star-btn" data-rating="1">☆</button>
+                        <button class="star-btn" data-rating="2">☆</button>
+                        <button class="star-btn" data-rating="3">☆</button>
+                        <button class="star-btn" data-rating="4">☆</button>
+                        <button class="star-btn" data-rating="5">☆</button>
+                    </div>
+                    <textarea class="rating-comment" id="ratingComment" placeholder="Compartilhe sua experiência com este freelancer..."></textarea>
+                    <button class="submit-rating" onclick="submitRating()">
+                        <i class='bx bx-star'></i>
+                        Enviar Avaliação
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input hidden para dados do rating - NOVO ELEMENTO ADICIONADO -->
+    <input type="hidden" id="currentFreelancerId">
+    <input type="hidden" id="currentRating">
+
+    <script src="js/empresa.js"></script>
+    <script src="js/chat.js"></script>
+    
+    <!-- NOVO: Script para funcionalidades adicionais -->
+    <script>
+        // Função para toggle dos filtros colapsáveis
+        function toggleFilterSection(header) {
+            const content = header.nextElementSibling;
+            const isExpanded = content.classList.contains('expanded');
+            
+            // Fecha todos os outros
+            document.querySelectorAll('.filter-content').forEach(item => {
+                item.classList.remove('expanded');
+            });
+            document.querySelectorAll('.filter-header').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Abre o selecionado se não estava expandido
+            if (!isExpanded) {
+                content.classList.add('expanded');
+                header.classList.add('active');
+            }
+        }
+
+        // Fechar modais ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Fechar modais com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // Inicializar filtros colapsáveis
+        document.addEventListener('DOMContentLoaded', function() {
+            // Abre o primeiro filtro por padrão
+            const firstFilter = document.querySelector('.filter-section.collapsible');
+            if (firstFilter) {
+                const header = firstFilter.querySelector('.filter-header');
+                const content = firstFilter.querySelector('.filter-content');
+                header.classList.add('active');
+                content.classList.add('expanded');
+            }
+        });
+
+        // Função para abrir modal de avaliação
+        function openRatingModal(freelancerId, freelancerName) {
+            document.getElementById('ratingFreelancerName').textContent = freelancerName;
+            document.getElementById('currentFreelancerId').value = freelancerId;
+            document.getElementById('ratingModal').style.display = 'flex';
+            
+            // Reset do formulário
+            document.querySelectorAll('.star-btn').forEach(star => {
+                star.textContent = '☆';
+                star.classList.remove('active');
+            });
+            document.getElementById('ratingComment').value = '';
+        }
+
+        // Função para fechar modal de avaliação
+        function closeRatingModal() {
+            document.getElementById('ratingModal').style.display = 'none';
+        }
+
+        // Inicializar estrelas interativas
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.star-btn').forEach((star, index, stars) => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    document.getElementById('currentRating').value = rating;
+                    
+                    stars.forEach((s, i) => {
+                        if (i < rating) {
+                            s.textContent = '★';
+                            s.classList.add('active');
+                        } else {
+                            s.textContent = '☆';
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+                
+                star.addEventListener('mouseover', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    stars.forEach((s, i) => {
+                        s.textContent = i < rating ? '★' : '☆';
+                    });
+                });
+                
+                star.addEventListener('mouseout', function() {
+                    const currentRating = parseInt(document.getElementById('currentRating').value) || 0;
+                    stars.forEach((s, i) => {
+                        s.textContent = i < currentRating ? '★' : '☆';
+                    });
+                });
+            });
+        });
+
+        // Função para enviar avaliação
+        function submitRating() {
+            const freelancerId = document.getElementById('currentFreelancerId').value;
+            const rating = document.getElementById('currentRating').value;
+            const comment = document.getElementById('ratingComment').value;
+
+            if (!rating) {
+                alert('Por favor, selecione uma avaliação com as estrelas.');
+                return;
+            }
+
+            if (!comment.trim()) {
+                alert('Por favor, escreva um comentário sobre sua experiência.');
+                return;
+            }
+
+            // Aqui você enviaria para o backend
+            console.log('Avaliação enviada:', {
+                freelancerId: freelancerId,
+                rating: rating,
+                comment: comment
+            });
+
+            alert('Avaliação enviada com sucesso! Obrigado pelo feedback.');
+            closeRatingModal();
+        }
+
+        console.log('Sistema de avaliação e chat carregado com sucesso!');
+    </script>
+    <script src="js/profile-modal.js"></script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/freelancer.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>WorkCodes - Perfil Freelancer</title>
+    
+   
+</head>
+<body>
+
+    <script>
+        console.log('Página do freelancer carregada');
+        console.log('Último tipo cadastro:', sessionStorage.getItem('ultimoTipoCadastro'));
+    </script>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">WorkCodes</div>
+                <div class="user-menu">
+                    <a href="index.html" class="btn btn-secondary">Voltar ao Início</a>
+                    <button class="btn btn-primary" id="logoutBtn">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="success-message" id="successMessage">Perfil atualizado com sucesso!</div>
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="profile-container">
+            <!-- Sidebar com preview do perfil -->
+            <div class="profile-sidebar">
+                <div class="profile-preview">
+                    <div class="profile-avatar">
+                        <i class='bx bx-code-alt'></i>
+                    </div>
+                    <div class="profile-name" id="previewName">Seu Nome</div>
+                    <div class="profile-role" id="previewRole">Desenvolvedor Full Stack</div>
+                    
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-number" id="previewProjects">0</div>
+                            <div class="stat-label">Projetos</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number" id="previewRating">0.0</div>
+                            <div class="stat-label">Avaliação</div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-toggle">
+                        <span class="status-text" id="statusText">Disponível</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="availabilityToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulário principal -->
+            <div class="profile-main">
+                <form id="freelancerForm">
+                    <h2 class="section-title">Informações Pessoais</h2>
+                    
+                    <div class="form-group">
+                        <label for="fullName">Nome Completo *</label>
+                        <input type="text" id="fullName" class="form-control" placeholder="Seu nome completo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Telefone *</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="(11) 99999-9999" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Localização</label>
+                        <input type="text" id="location" class="form-control" placeholder="Cidade, Estado">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="portfolio">Portfólio/LinkedIn</label>
+                        <input type="url" id="portfolio" class="form-control" placeholder="https://seusite.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bio">Biografia Profissional</label>
+                        <textarea id="bio" class="form-control" rows="4" placeholder="Conte um pouco sobre sua experiência e especialidades..."></textarea>
+                    </div>
+
+                    <h2 class="section-title">Habilidades Técnicas</h2>
+                    
+                    <!-- Linguagens Front-end -->
+                    <div class="skill-category">
+                        <h4>Linguagens Front-end</h4>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontend" value="HTML5">
+                                <span class="checkmark"></span>
+                                HTML5
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontend" value="CSS3">
+                                <span class="checkmark"></span>
+                                CSS3
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontend" value="JavaScript">
+                                <span class="checkmark"></span>
+                                JavaScript
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontend" value="TypeScript">
+                                <span class="checkmark"></span>
+                                TypeScript
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Frameworks Front-end -->
+                    <div class="skill-category">
+                        <h4>Frameworks Front-end</h4>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontendFrameworks" value="React">
+                                <span class="checkmark"></span>
+                                React
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontendFrameworks" value="Vue.js">
+                                <span class="checkmark"></span>
+                                Vue.js
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontendFrameworks" value="Angular">
+                                <span class="checkmark"></span>
+                                Angular
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontendFrameworks" value="Svelte">
+                                <span class="checkmark"></span>
+                                Svelte
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontendFrameworks" value="Next.js">
+                                <span class="checkmark"></span>
+                                Next.js
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="frontendFrameworks" value="Nuxt.js">
+                                <span class="checkmark"></span>
+                                Nuxt.js
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Linguagens Back-end -->
+                    <div class="skill-category">
+                        <h4>Linguagens Back-end</h4>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backend" value="Node.js">
+                                <span class="checkmark"></span>
+                                Node.js
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backend" value="Python">
+                                <span class="checkmark"></span>
+                                Python
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backend" value="Java">
+                                <span class="checkmark"></span>
+                                Java
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backend" value="PHP">
+                                <span class="checkmark"></span>
+                                PHP
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backend" value="Ruby">
+                                <span class="checkmark"></span>
+                                Ruby
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backend" value="C#">
+                                <span class="checkmark"></span>
+                                C#
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backend" value="Go">
+                                <span class="checkmark"></span>
+                                Go
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Frameworks Back-end -->
+                    <div class="skill-category">
+                        <h4>Frameworks Back-end</h4>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backendFrameworks" value="Express.js">
+                                <span class="checkmark"></span>
+                                Express.js
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backendFrameworks" value="Django">
+                                <span class="checkmark"></span>
+                                Django
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backendFrameworks" value="Flask">
+                                <span class="checkmark"></span>
+                                Flask
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backendFrameworks" value="Spring Boot">
+                                <span class="checkmark"></span>
+                                Spring Boot
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backendFrameworks" value="Laravel">
+                                <span class="checkmark"></span>
+                                Laravel
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="backendFrameworks" value="Ruby on Rails">
+                                <span class="checkmark"></span>
+                                Ruby on Rails
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Bancos de Dados -->
+                    <div class="skill-category">
+                        <h4>Bancos de Dados</h4>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="databases" value="MySQL">
+                                <span class="checkmark"></span>
+                                MySQL
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="databases" value="PostgreSQL">
+                                <span class="checkmark"></span>
+                                PostgreSQL
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="databases" value="MongoDB">
+                                <span class="checkmark"></span>
+                                MongoDB
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="databases" value="SQLite">
+                                <span class="checkmark"></span>
+                                SQLite
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="databases" value="Redis">
+                                <span class="checkmark"></span>
+                                Redis
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Ferramentas e Outros -->
+                    <div class="skill-category">
+                        <h4>Ferramentas e Outros</h4>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="tools" value="Git">
+                                <span class="checkmark"></span>
+                                Git
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="tools" value="Docker">
+                                <span class="checkmark"></span>
+                                Docker
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="tools" value="AWS">
+                                <span class="checkmark"></span>
+                                AWS
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="tools" value="Firebase">
+                                <span class="checkmark"></span>
+                                Firebase
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="tools" value="Figma">
+                                <span class="checkmark"></span>
+                                Figma
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Seção da Equipe -->
+                    <div class="team-section">
+                        <h2 class="section-title">Minha Equipe</h2>
+                        <p style="margin-bottom: 15px; color: rgba(255, 255, 255, 0.7);">
+                            Adicione membros da sua equipe (opcional)
+                        </p>
+                        
+                        <div id="teamMembers">
+                            <!-- Membros da equipe serão adicionados aqui -->
+                        </div>
+                        
+                        <div class="add-member-btn" id="addMemberBtn">
+                            <i class='bx bx-plus'></i> Adicionar Membro da Equipe
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 30px; padding: 15px;">
+                        Salvar Alterações
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+        <p>Salvando perfil...</p>
+    </div>
+
+    <script src="js/freelancer.js"></script>
+</body>
+</html>
