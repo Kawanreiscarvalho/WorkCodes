@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkCodes - Minhas Propostas</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/propostasEmpresas.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">WorkCodes</div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class='bx bx-moon'></i>
+                </button>
+                <a href="empresa.html" class="btn btn-secondary">
+                    <i class='bx bx-arrow-back'></i>
+                    Voltar para Empresa
+                </a>
+                <div class="user-menu" id="userMenu">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=40&h=40&fit=crop&crop=face" alt="Empresa" class="user-avatar">
+                    <span id="userName">Minha Empresa</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class='bx bx-file'></i>
+                    Minhas Propostas
+                </h1>
+                <p class="page-subtitle">Acompanhe todas as propostas enviadas para freelancers</p>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filters-section">
+                <div class="filter-group">
+                    <label>Filtrar por status:</label>
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">Todas as propostas</option>
+                        <option value="pending">Pendentes</option>
+                        <option value="accepted">Aceitas</option>
+                        <option value="rejected">Recusadas</option>
+                        <option value="quit">Desistências</option>
+                    </select>
+                </div>
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalProposals">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat-card pending">
+                        <div class="stat-number" id="pendingProposals">0</div>
+                        <div class="stat-label">Pendentes</div>
+                    </div>
+                    <div class="stat-card accepted">
+                        <div class="stat-number" id="acceptedProposals">0</div>
+                        <div class="stat-label">Aceitas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Propostas -->
+            <div class="proposals-container" id="proposalsContainer">
+                <!-- Propostas serão carregadas aqui -->
+            </div>
+
+            <!-- Estado vazio -->
+            <div class="empty-state" id="emptyState">
+                <i class='bx bx-file-blank'></i>
+                <h3>Nenhuma proposta enviada</h3>
+                <p>Você ainda não enviou propostas para freelancers.</p>
+                <a href="empresa.html" class="btn btn-primary">
+                    <i class='bx bx-search'></i>
+                    Encontrar Freelancers
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes da Proposta -->
+    <div class="modal" id="proposalModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Detalhes da Proposta</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="proposalModalBody">
+                <!-- Conteúdo será carregado dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/propostasEmpresas.js"></script>
+</body>
+</html>

@@ -963,3 +963,274 @@ function renderFreelancerCard(freelancer) {
         </div>
     `;
 }
+
+
+// =============================================
+// SISTEMA DE INTEGRAÇÃO EMPRESA - ADICIONAR NO FINAL
+// =============================================
+
+// Sistema de Propostas Integrado
+let workcodesProposalsSystem = {
+    proposals: JSON.parse(localStorage.getItem('workcodes_proposals')) || [],
+    
+    sendProposal: function(freelancerId, companyData, projectData) {
+        const proposal = {
+            id: 'proposta_' + Date.now(),
+            freelancerId: freelancerId,
+            company: companyData,
+            project: projectData,
+            status: 'pending',
+            date: new Date().toISOString(),
+            messages: [
+                {
+                    id: Date.now(),
+                    sender: 'company',
+                    text: `Proposta enviada: ${projectData.description.substring(0, 100)}...`,
+                    timestamp: new Date().toISOString()
+                }
+            ]
+        };
+        
+        this.proposals.push(proposal);
+        this.saveProposals();
+        
+        // Notificar sistema existente (backward compatibility)
+        if (window.proposalsSystem) {
+            window.proposalsSystem.proposals.push(proposal);
+            window.proposalsSystem.saveProposals();
+        }
+        
+        return proposal;
+    },
+    
+    getProposalsByCompany: function(companyId) {
+        return this.proposals.filter(p => p.company.id === companyId);
+    },
+    
+    getProposalsByFreelancer: function(freelancerId) {
+        return this.proposals.filter(p => p.freelancerId === freelancerId);
+    },
+    
+    updateProposalStatus: function(proposalId, status) {
+        const proposal = this.proposals.find(p => p.id === proposalId);
+        if (proposal) {
+            proposal.status = status;
+            proposal.messages.push({
+                id: Date.now(),
+                sender: 'system', 
+                text: `Status alterado para: ${status}`,
+                timestamp: new Date().toISOString()
+            });
+            this.saveProposals();
+        }
+    },
+    
+    saveProposals: function() {
+        localStorage.setItem('workcodes_proposals', JSON.stringify(this.proposals));
+        console.log('💾 Propostas salvas no sistema integrado:', this.proposals.length);
+    }
+};
+
+// Substituir a função submitProposal existente
+function submitProposal(freelancerId) {
+    const companyProfile = JSON.parse(localStorage.getItem('companyProfile')) || {
+        id: 'empresa_' + Date.now(),
+        name: document.getElementById('companyName')?.value || 'Minha Empresa',
+        industry: document.getElementById('companyIndustry')?.value || 'Tecnologia',
+        description: document.getElementById('companyDescription')?.value || '',
+        website: document.getElementById('companyWebsite')?.value || '',
+        logo: document.getElementById('companyLogo')?.src || ''
+    };
+    
+    const projectData = {
+        title: `Projeto com ${document.getElementById('modalFreelancerName').textContent}`,
+        description: document.getElementById('projectDescription').value,
+        type: document.getElementById('contractType').value,
+        budget: document.getElementById('projectBudget').value,
+        deadline: '30 dias'
+    };
+
+    if (!projectData.description || !projectData.budget) {
+        alert('Por favor, preencha todos os campos da proposta.');
+        return;
+    }
+
+    // Enviar proposta pelo sistema integrado
+    const proposal = workcodesProposalsSystem.sendProposal(freelancerId, companyProfile, projectData);
+    
+    alert('✅ Proposta enviada com sucesso! O freelancer foi notificado.');
+    closeContractModal();
+    
+    // Atualizar badge de propostas
+    updateProposalsBadge();
+    
+    // Abrir chat automaticamente
+    if (window.chatSystem) {
+        window.chatSystem.openChat(freelancerId);
+    }
+    
+    console.log('📨 Proposta enviada pelo sistema integrado:', proposal);
+}
+
+// Atualizar a função openContractModal existente
+const originalOpenContractModal = window.openContractModal;
+window.openContractModal = function(freelancerId) {
+    const freelancer = freelancersData.find(f => f.id === freelancerId);
+    if (freelancer) {
+        document.getElementById('modalFreelancerName').textContent = freelancer.name;
+        document.getElementById('modalFreelancerName').dataset.freelancerId = freelancerId;
+        document.getElementById('modalFreelancerRate').textContent = `R$ ${freelancer.rate}/hora`;
+        contractModal.style.display = 'flex';
+        
+        // Preencher dados do projeto automaticamente
+        document.getElementById('projectDescription').value = `Gostaríamos de contratar seus serviços para ${freelancer.title.toLowerCase()}. Precisamos de ${freelancer.skills.slice(0, 3).join(', ')}.`;
+        document.getElementById('projectBudget').value = Math.round(freelancer.rate * 20 * 1.2); // 20 horas + 20%
+        
+        // Configurar botão de enviar
+        const submitBtn = contractModal.querySelector('.save-btn');
+        submitBtn.onclick = function() {
+            submitProposal(freelancerId);
+        };
+    }
+};
+
+// Sistema de Badge e Notificações
+function updateProposalsBadge() {
+    const companyProfile = JSON.parse(localStorage.getItem('companyProfile')) || {};
+    const companyProposals = workcodesProposalsSystem.getProposalsByCompany(companyProfile.id);
+    const badge = document.getElementById('proposalsBadge');
+    
+    if (badge) {
+        const pendingCount = companyProposals.filter(p => p.status === 'pending').length;
+        badge.textContent = pendingCount > 0 ? pendingCount : '0';
+        badge.style.display = pendingCount > 0 ? 'flex' : 'none';
+    }
+}
+
+// Verificar se é para abrir chat automaticamente
+function checkAutoOpenChat() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const openChat = urlParams.get('openChat');
+    const freelancerId = urlParams.get('freelancerId');
+    
+    if (openChat === 'true' && freelancerId && window.chatSystem) {
+        setTimeout(() => {
+            window.chatSystem.openChat(parseInt(freelancerId));
+        }, 1000);
+    }
+}
+
+// Verificar se é para abrir perfil automaticamente
+function checkAutoOpenProfile() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const viewProfile = urlParams.get('viewProfile');
+    
+    if (viewProfile && window.openFreelancerProfile) {
+        setTimeout(() => {
+            window.openFreelancerProfile(parseInt(viewProfile));
+        }, 1000);
+    }
+}
+
+// Inicializar sistema integrado
+function initializeIntegratedSystem() {
+    updateProposalsBadge();
+    checkAutoOpenChat();
+    checkAutoOpenProfile();
+    
+    // Sincronizar com sistema existente
+    if (window.proposalsSystem) {
+        workcodesProposalsSystem.proposals = [...new Set([...workcodesProposalsSystem.proposals, ...window.proposalsSystem.proposals])];
+        workcodesProposalsSystem.saveProposals();
+    }
+    
+    // Atualizar badge a cada 30 segundos
+    setInterval(updateProposalsBadge, 30000);
+    
+    console.log('✅ Sistema integrado empresa inicializado!');
+}
+
+// Adicionar botão de ver propostas no header
+function addProposalsButton() {
+    const navActions = document.querySelector('.nav-actions');
+    if (navActions && !document.getElementById('viewProposalsBtn')) {
+        const proposalsBtn = document.createElement('a');
+        proposalsBtn.id = 'viewProposalsBtn';
+        proposalsBtn.className = 'view-proposals-btn';
+        proposalsBtn.href = 'propostasEmpresas.html';
+        proposalsBtn.innerHTML = `
+            <i class='bx bx-file'></i>
+            Minhas Propostas
+            <span class="proposals-badge" id="proposalsBadge" style="display: none;">0</span>
+        `;
+        
+        // Inserir antes do user-menu
+        const userMenu = document.querySelector('.user-menu');
+        if (userMenu) {
+            navActions.insertBefore(proposalsBtn, userMenu);
+        } else {
+            navActions.appendChild(proposalsBtn);
+        }
+    }
+}
+
+// CSS para o botão de propostas
+function addProposalsCSS() {
+    if (!document.getElementById('proposals-css')) {
+        const style = document.createElement('style');
+        style.id = 'proposals-css';
+        style.textContent = `
+            .view-proposals-btn {
+                position: relative;
+                background: var(--primary);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 6px;
+                cursor: pointer;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                font-size: 0.9rem;
+            }
+            
+            .view-proposals-btn:hover {
+                background: var(--primary-dark);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            }
+            
+            .proposals-badge {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background: #ef4444;
+                color: white;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                font-size: 0.7rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                border: 2px solid var(--bg-primary);
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+// Inicialização quando o DOM carregar
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        addProposalsCSS();
+        addProposalsButton();
+        initializeIntegratedSystem();
+    }, 1000);
+});
+
+console.log('🚀 Sistema de integração empresa↔freelancer carregado!');

@@ -169,9 +169,9 @@ function redirecionarUsuario(tipo) {
     
     // Redirecionar baseado no tipo
     if (tipo === 'empresa') {
-        window.location.href = "empresa.html";
+        window.location.href = "login.html";
     } else if (tipo === 'freelancer') {
-        window.location.href = "freelancer.html";
+        window.location.href = "login.html";
     } else {
         // Fallback para login
         window.location.href = "login.html";

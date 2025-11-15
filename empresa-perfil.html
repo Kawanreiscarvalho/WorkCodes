@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil da Empresa - WorkCodes</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/empresa.css">
+    <style>
+        .profile-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .company-logo-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            margin: 0 auto 1rem;
+            background: var(--bg-primary);
+        }
+
+        .company-name-large {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-industry-large {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+        }
+
+        .profile-form-container {
+            background: var(--bg-primary);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .image-upload-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--bg-secondary);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: var(--bg-tertiary);
+        }
+
+        .upload-area i {
+            font-size: 2rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .logo-preview {
+            text-align: center;
+        }
+
+        .logo-preview img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .contact-method i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            width: 40px;
+            text-align: center;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-value {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border);
+            transition: var(--transition);
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        .map-container {
+            height: 200px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .preview-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .preview-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            padding: 0.5rem 1rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .save-actions {
+            position: sticky;
+            bottom: 0;
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 968px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-stats {
+                gap: 1.5rem;
+            }
+            
+            .company-name-large {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 0 1rem;
+            }
+            
+            .profile-header {
+                padding: 2rem 1rem;
+            }
+            
+            .profile-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .image-upload-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="empresa.html" style="text-decoration: none; color: inherit;">WorkCodes Empresas</a>
+            </div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class='bx bx-moon'></i>
+                </button>
+                <div class="user-menu">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=40&h=40&fit=crop&crop=face" alt="Empresa" class="user-avatar">
+                    <span>Minha Empresa</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <div class="profile-container">
+        <!-- Header do Perfil -->
+        <div class="profile-header">
+            <div class="profile-header-content">
+                <img src="" alt="Logo da Empresa" class="company-logo-large" id="companyLogoLarge">
+                <h1 class="company-name-large" id="companyNameLarge">Sua Empresa</h1>
+                <div class="company-industry-large" id="companyIndustryLarge">Indústria</div>
+                
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <span class="stat-number" id="projectsCount">0</span>
+                        <span class="stat-label">Projetos</span>
+                    </div>
+                    <div class="profile-stat">
+                        <span class="stat-number" id="hiredCount">0</span>
+                        <span class="stat-label">Freelancers</span>
+                    </div>
+                    <div class="profile-stat">
+                        <span class="stat-number" id="ratingCount">0.0</span>
+                        <span class="stat-label">Avaliação</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo do Perfil -->
+        <div class="profile-content">
+            <!-- Formulário Principal -->
+            <div class="profile-form-container">
+                <!-- Informações Básicas -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class='bx bx-building'></i>
+                        Informações da Empresa
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nome da Empresa *</label>
+                        <input type="text" class="form-input" id="companyName" placeholder="Digite o nome da empresa" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Indústria *</label>
+                        <select class="form-select" id="companyIndustry" required>
+                            <option value="">Selecione a indústria</option>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Finanças">Finanças</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Consultoria">Consultoria</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Descrição da Empresa *</label>
+                        <textarea class="form-textarea" id="companyDescription" placeholder="Descreva sua empresa, missão, valores..." rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">CNPJ</label>
+                        <input type="text" class="form-input" id="companyCNPJ" placeholder="00.000.000/0000-00">
+                    </div>
+                </div>
+
+                <!-- Logo e Imagens -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class='bx bx-image'></i>
+                        Logo e Imagens
+                    </h2>
+                    
+                    <div class="logo-preview">
+                        <img src="" alt="Preview do Logo" id="logoPreview">
+                        <div>Logo da Empresa</div>
+                    </div>
+
+                    <div class="image-upload-grid">
+                        <label class="upload-area" for="logoUpload">
+                            <i class='bx bx-cloud-upload'></i>
+                            <span>Alterar Logo</span>
+                            <input type="file" id="logoUpload" accept="image/*" style="display: none;">
+                        </label>
+                        
+                        <label class="upload-area" for="bannerUpload">
+                            <i class='bx bx-image-add'></i>
+                            <span>Banner</span>
+                            <input type="file" id="bannerUpload" accept="image/*" style="display: none;">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Contato -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class='bx bx-phone'></i>
+                        Informações de Contato
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Email Corporativo *</label>
+                        <input type="email" class="form-input" id="companyEmail" placeholder="contato@empresa.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Telefone/WhatsApp *</label>
+                        <input type="tel" class="form-input" id="companyPhone" placeholder="(11) 99999-9999" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Website</label>
+                        <input type="url" class="form-input" id="companyWebsite" placeholder="https://empresa.com">
+                    </div>
+                </div>
+
+                <!-- Localização -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class='bx bx-map'></i>
+                        Localização
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Endereço</label>
+                        <input type="text" class="form-input" id="companyAddress" placeholder="Rua, número, bairro">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Cidade</label>
+                        <input type="text" class="form-input" id="companyCity" placeholder="Cidade">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Estado</label>
+                        <select class="form-select" id="companyState">
+                            <option value="">Selecione o estado</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <!-- Adicione todos os estados -->
+                            <option value="SP">São Paulo</option>
+                        </select>
+                    </div>
+
+                    <div class="map-container">
+                        <i class='bx bx-map-pin'></i>
+                        <span>Mapa da localização aparecerá aqui</span>
+                    </div>
+                </div>
+
+                <!-- Redes Sociais -->
+                <div class="form-section">
+                    <h2 class="section-title">
+                        <i class='bx bx-share-alt'></i>
+                        Redes Sociais
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">LinkedIn</label>
+                        <input type="url" class="form-input" id="linkedinUrl" placeholder="https://linkedin.com/company/empresa">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Instagram</label>
+                        <input type="url" class="form-input" id="instagramUrl" placeholder="https://instagram.com/empresa">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Facebook</label>
+                        <input type="url" class="form-input" id="facebookUrl" placeholder="https://facebook.com/empresa">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="profile-sidebar">
+                <!-- Preview de Contato -->
+                <div class="preview-card">
+                    <h3 class="preview-title">Contato</h3>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <i class='bx bx-envelope'></i>
+                            <div class="contact-info">
+                                <span class="contact-label">Email</span>
+                                <span class="contact-value" id="previewEmail">Não informado</span>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class='bx bx-phone'></i>
+                            <div class="contact-info">
+                                <span class="contact-label">WhatsApp</span>
+                                <span class="contact-value" id="previewPhone">Não informado</span>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <i class='bx bx-globe'></i>
+                            <div class="contact-info">
+                                <span class="contact-label">Website</span>
+                                <span class="contact-value" id="previewWebsite">Não informado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configurações -->
+                <div class="preview-card">
+                    <h3 class="preview-title">Configurações</h3>
+                    <div class="form-group">
+                        <label class="form-label" style="display: flex; justify-content: between; align-items: center;">
+                            <span>Perfil Público</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="profilePublic" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" style="display: flex; justify-content: between; align-items: center;">
+                            <span>Receber Propostas</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="receiveProposals" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Links Rápidos -->
+                <div class="preview-card">
+                    <h3 class="preview-title">Links Rápidos</h3>
+                    <div class="social-links">
+                        <a href="empresa.html" class="social-link">
+                            <i class='bx bx-home'></i> Início
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class='bx bx-briefcase'></i> Vagas
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class='bx bx-chat'></i> Mensagens
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ações de Salvamento -->
+        <div class="save-actions">
+            <button class="action-btn secondary" onclick="window.history.back()">
+                <i class='bx bx-arrow-back'></i>
+                Voltar
+            </button>
+            <button class="action-btn primary" onclick="saveCompanyProfile()">
+                <i class='bx bx-save'></i>
+                Salvar Perfil
+            </button>
+        </div>
+    </div>
+
+    <script src="js/empresa-perfil.js"></script>
+</body>
+</html>

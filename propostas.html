@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkCodes - Propostas</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/propostas.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">WorkCodes</div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class='bx bx-moon'></i>
+                </button>
+                <div class="user-menu" id="userMenu">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=40&h=40&fit=crop&crop=face" alt="Usuário" class="user-avatar">
+                    <span id="userName">Usuário</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-layout">
+            <!-- Proposals List -->
+            <section class="proposals-section">
+                <h2 class="section-title">
+                    <i class='bx bx-file'></i>
+                    Propostas
+                </h2>
+                <div class="proposals-list" id="proposalsList">
+                    <!-- Proposals will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Proposal Detail -->
+            <section class="proposal-detail">
+                <div class="detail-header">
+                    <h2 class="detail-title" id="detailTitle">Selecione uma proposta</h2>
+                    <div class="detail-actions" id="detailActions" style="display: none;">
+                        <!-- Actions will be loaded here based on user role and proposal status -->
+                    </div>
+                </div>
+
+                <div class="detail-content" id="detailContent">
+                    <div class="empty-state" id="emptyState">
+                        <i class='bx bx-file-blank'></i>
+                        <p>Selecione uma proposta para visualizar os detalhes</p>
+                    </div>
+                    
+                    <div id="proposalDetails" style="display: none;">
+                        <div class="detail-section">
+                            <h3>Descrição do Projeto</h3>
+                            <p id="projectDescription"></p>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Informações da Proposta</h3>
+                            <div class="proposal-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Tipo de Contrato</span>
+                                    <span class="meta-value" id="contractType"></span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Orçamento</span>
+                                    <span class="meta-value" id="projectBudget"></span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Prazo Estimado</span>
+                                    <span class="meta-value" id="projectDeadline"></span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Status</span>
+                                    <span class="meta-value" id="proposalStatus"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>Informações do Contratante</h3>
+                            <div class="proposal-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Nome</span>
+                                    <span class="meta-value" id="clientName"></span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Tipo</span>
+                                    <span class="meta-value" id="clientType"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-section">
+                            <h3>Conversa</h3>
+                            <div class="chat-messages" id="chatMessages">
+                                <!-- Messages will be loaded here -->
+                            </div>
+                            <div class="chat-input-container">
+                                <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua mensagem...">
+                                <button class="send-message" id="sendMessage">
+                                    <i class='bx bx-send'></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação para Desistir -->
+    <div class="modal" id="quitModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Desistir do Projeto</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja desistir deste projeto?</p>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label">Motivo (opcional)</label>
+                    <textarea class="form-textarea" id="quitReason" placeholder="Descreva o motivo da desistência..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancelQuit">Cancelar</button>
+                    <button class="btn btn-danger" id="confirmQuit">Desistir do Projeto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/propostas.js"></script>
+</body>
+</html>

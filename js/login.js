@@ -1,3 +1,4 @@
+// login.js - VERSÃO CORRIGIDA
 const loginForm = document.getElementById('loginForm');
 const loadingSpinner = document.getElementById('loadingSpinner');
 const successMessage = document.getElementById('successMessage');
@@ -51,26 +52,24 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-// Função para buscar usuário no localStorage
+// Função para buscar usuário no localStorage - CORRIGIDA
 function buscarUsuario(email, modo) {
     try {
         const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || [];
         console.log('Buscando usuário:', email, 'modo:', modo);
         console.log('Usuários disponíveis:', usuariosCadastrados);
         
-        // Primeiro, buscar por email e modo específico
-        let usuario = usuariosCadastrados.find(u => 
+        // Buscar usuário por email E tipo (modo) - CORREÇÃO AQUI
+        const usuario = usuariosCadastrados.find(u => 
             u.email === email && u.tipo === modo
         );
         
-        // Se não encontrou com modo específico, buscar apenas por email
         if (!usuario) {
-            usuario = usuariosCadastrados.find(u => u.email === email);
-            if (usuario) {
-                console.log('Usuário encontrado sem verificação de modo:', usuario);
-            }
+            console.log('❌ Usuário não encontrado com email:', email, 'e tipo:', modo);
+            return null;
         }
         
+        console.log('✅ Usuário encontrado:', usuario);
         return usuario;
     } catch (error) {
         console.error('Erro ao buscar usuário:', error);
@@ -80,19 +79,21 @@ function buscarUsuario(email, modo) {
 
 // Função para redirecionar após login
 function redirecionarAposLogin(tipo) {
-    console.log('Redirecionando para tipo:', tipo);
+    console.log('🎯 Redirecionando para tipo:', tipo);
     
     if (tipo === 'empresa') {
+        console.log('➡️ Indo para empresa.html');
         window.location.href = "empresa.html";
     } else if (tipo === 'freelancer') {
+        console.log('➡️ Indo para freelancer.html');
         window.location.href = "freelancer.html";
     } else {
-        // Fallback - redirecionar para página genérica
-        window.location.href = "admin.html";
+        console.log('⚠️ Tipo não reconhecido, usando padrão freelancer');
+        window.location.href = "freelancer.html";
     }
 }
 
-// Simular login API
+// Simular login API - CORRIGIDA
 function simularLoginAPI(email, senha, modo) {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -101,33 +102,37 @@ function simularLoginAPI(email, senha, modo) {
             if (!usuario) {
                 reject({
                     status: 404,
-                    message: 'Usuário não encontrado. Verifique o e-mail e o tipo selecionado.'
+                    message: `Usuário não encontrado. Verifique se você selecionou o modo correto (${modo === 'empresa' ? 'Empresa' : 'Freelancer'}).`
                 });
-            } else if (usuario.senha !== senha) {
+                return;
+            }
+            
+            if (usuario.senha !== senha) {
                 reject({
                     status: 401,
                     message: 'Senha incorreta.'
                 });
-            } else {
-                // Salvar usuário logado na sessionStorage
-                const usuarioLogado = {
-                    id: usuario.id,
-                    nome: usuario.nome,
-                    email: usuario.email,
-                    tipo: usuario.tipo,
-                    dataCadastro: usuario.dataCadastro
-                };
-                
-                sessionStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
-                console.log('Usuário logado salvo:', usuarioLogado);
-                
-                resolve({
-                    status: 200,
-                    message: 'Login realizado com sucesso!',
-                    usuario: usuarioLogado,
-                    tipo: usuario.tipo
-                });
+                return;
             }
+            
+            // Login bem-sucedido
+            const usuarioLogado = {
+                id: usuario.id,
+                nome: usuario.nome,
+                email: usuario.email,
+                tipo: usuario.tipo,
+                dataCadastro: usuario.dataCadastro
+            };
+            
+            sessionStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
+            console.log('✅ Usuário logado salvo:', usuarioLogado);
+            
+            resolve({
+                status: 200,
+                message: 'Login realizado com sucesso!',
+                usuario: usuarioLogado,
+                tipo: usuario.tipo
+            });
         }, 1500);
     });
 }
@@ -141,7 +146,7 @@ loginForm.addEventListener('submit', async (event) => {
     const email = loginForm.email.value.trim();
     const senha = loginForm.password.value.trim();
 
-    console.log('Tentando login:', { email, modo: modoSelecionado });
+    console.log('🔐 Tentando login:', { email, senha, modo: modoSelecionado });
 
     // Validações básicas
     if (!email || !senha) {
@@ -173,7 +178,7 @@ loginForm.addEventListener('submit', async (event) => {
             }
 
             // Mensagem de sucesso
-            successMessage.textContent = `${resultado.message} Redirecionando para área ${modoSelecionado}...`;
+            successMessage.textContent = `${resultado.message} Redirecionando para área ${resultado.tipo}...`;
             successMessage.style.display = 'block';
             
             // Limpar formulário
@@ -181,11 +186,12 @@ loginForm.addEventListener('submit', async (event) => {
             
             // Redirecionar após 2 segundos
             setTimeout(() => {
+                console.log('🕒 Redirecionando agora para:', resultado.tipo);
                 redirecionarAposLogin(resultado.tipo);
             }, 2000);
         }
     } catch (error) {
-        console.error('Erro no login:', error);
+        console.error('❌ Erro no login:', error);
         showError(error.message || 'Erro ao realizar login. Tente novamente.');
     } finally {
         // Esconder loading
@@ -199,4 +205,4 @@ function showError(message) {
 }
 
 // Debug adicional
-console.log('Sistema de login WorkCodes carregado - VERSÃO CORRIGIDA');
+console.log('✅ Sistema de login WorkCodes carregado - VERSÃO CORRIGIDA');
